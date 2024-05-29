@@ -16,9 +16,9 @@ $br = ",";
 // echo $DpA;
 //文字作成
     // デバッグ用に$_POSTデータを表示
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
+    // echo "<pre>";
+    // print_r($_POST);
+    // echo "</pre>";
 // echo $distance;
 $str = date("Y/m/d H:i").$br.$distance.$br.$price.$br.$amount.$br.$PpA.$br.$DpP.$br.$DpA.$br.$store;
 // echo $str;

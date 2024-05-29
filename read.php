@@ -56,6 +56,17 @@ foreach ($latestData as $row) {
     
     $prices10[] = (float)$row[4];
 }
+
+$pastData = array_slice($data, 0, 10);
+$pastDates10 = [];
+$pastAmount10 = [];
+
+foreach ($pastData as $row) {
+    $pastDates10[] = DateTime::createFromFormat('Y/m/d H:i', $row[0])->format('Y-m-d\TH:i:s');
+    
+    $pastAmount10[] = (float)$row[3];
+}
+
 // echo $dates10;
 // echo $prices10;
 // echo "<pre>";
@@ -138,6 +149,7 @@ echo htmlspecialchars("平均燃費：".$aDpA."km/L", ENT_QUOTES); ?>
 <div class="mx-2 w-4/5">
     <canvas id="mychart" width="600" height="200"></canvas>
     <canvas id="mychart2" width="600" height="200"></canvas>
+    <canvas id="mychart3" width="600" height="200"></canvas>
 
 </div>
 
@@ -246,6 +258,56 @@ let myChart2 = new Chart(ctx2, {
     }
 });
 
+// グラフ3個目
+let pastDates10 = <?php echo json_encode($pastDates10); ?>;
+let pastAmount10 = <?php echo json_encode($pastAmount10); ?>;
+console.log(pastAmount10);
+let ctx3 = document.getElementById('mychart3');
+let myChart3 = new Chart(ctx3, {
+    type: 'line',
+    data: {
+        labels: pastDates10,
+        datasets: [{
+            label: '最過去10件の購入量 (L)',
+            data: pastAmount10,
+            borderColor: 'violet',
+            fill: false
+        }],
+    },
+    options: {
+        backgroundColor: 'red', 
+        scales: {
+            x: {
+                type: 'time',
+                
+                time: {
+                    unit: 'month',
+                    tooltipFormat: 'YYYY/MM/DD'
+            
+                },
+                title: {
+                    display: true,
+                    text: '日付'
+                // },
+                // ticks: {
+                //     autoSkip: false,
+                //     maxRotation: 0,
+                //     major: {
+                //         enabled: true
+                //     },
+                },
+            },
+            y: {
+                min:0,
+                max: 60,
+                title: {
+                    display: true,
+                    text: '購入量 (L)'
+                }
+            }
+        }
+    }
+});
 
 
 
