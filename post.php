@@ -32,11 +32,14 @@
                     <option name="">E</option>
 
                 </select>
-                <div>A : EneJet新大宮SS, B : EneJetセルフ与野SS</div>
-                <div>C : EneJetセルフ栗橋SS, D : Shell全般, E : その他</div>
+                <div class="w-4/5 border-2 border-gray-400">
+                    <div>A : EneJet新大宮SS, B : EneJetセルフ与野SS</div>
+                    <div>C : EneJetセルフ栗橋SS, D : Shell全般, E : その他</div>
+                </div>
+                
             </div>
 
-	    <input type="submit" value="送信">
+	    <input class="bg-gray-300 rounded-lg" type="submit" value="送信">
         </div>
 	    
     </form>

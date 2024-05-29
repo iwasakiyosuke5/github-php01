@@ -41,25 +41,28 @@ fclose($file);
 </head>
 <body>
 <?php include("inc/header.html") ?>
-<?php
-echo "走行距離：".$distance." km";
-echo "<br>";
-echo "価格：".$price." 円";
-echo "<br>";
-echo "購入量：".$amount." L";
-echo "<br>";
-echo "単価：".$PpA." 円/L";
-echo "<br>";
-echo "距離単価：".$DpP." km/円";
-echo "<br>";
-echo "燃費：".$DpA." km/L";
-echo "<br>";
-echo "店舗：".$store." 店";
-echo "<br>";
-echo "上記を登録しました。"
-?>
-<div>A : EneJet新大宮SS, B : EneJetセルフ与野SS</div>
-<div>C : EneJetセルフ栗橋SS, D : Shell全般, E : その他</div>
+<div class="mx-2">
+    <?php
+    echo "走行距離：".$distance." km";
+    echo "<br>";
+    echo "価格：".$price." 円";
+    echo "<br>";
+    echo "購入量：".$amount." L";
+    echo "<br>";
+    echo "単価：".$PpA." 円/L";
+    echo "<br>";
+    echo "距離単価：".$DpP." km/円";
+    echo "<br>";
+    echo "燃費：".$DpA." km/L";
+    echo "<br>";
+    echo "店舗：".$store." 店";
+    echo "<br>";
+    echo "上記を登録しました。"
+    ?>
+    <div>A : EneJet新大宮SS, B : EneJetセルフ与野SS</div>
+    <div>C : EneJetセルフ栗橋SS, D : Shell全般, E : その他</div>
+
+</div>
 
 
 <?php include("inc/footer.html") ?>

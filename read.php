@@ -13,9 +13,12 @@ $tAmount = 0;
 $tPpA = 0;
 $tDpP = 0;
 $tDpA = 0;
+$maxDpA = 0;
+$minDpA = PHP_FLOAT_MAX; // 初期値を最大の浮動小数点数に設定
 $rowCount = 0;
 $dates = [];
 $fuelEs = [];
+
 
 while ($line = fgets($fData)){
     // $data = explode(",", trim($line));
@@ -26,7 +29,15 @@ while ($line = fgets($fData)){
     $tAmount += (float)$row[3];
     $tPpA += (float)$row[4];
     $tDpP += (float)$row[5];
-    $tDpA += (float)$row[6];
+    $currentDpA = (float)$row[6];
+    $tDpA += $currentDpA;
+    if ($currentDpA > $maxDpA){
+        $maxDpA = $currentDpA;
+    }
+    if ($currentDpA < $minDpA){
+        $minDpA = $currentDpA;
+    }
+    
     // 日付をISO 8601形式に変換 非常に重要
     $date = DateTime::createFromFormat('Y/m/d H:i', $row[0])->format('Y-m-d\TH:i:s');
     $dates[] = $date;
@@ -35,6 +46,22 @@ while ($line = fgets($fData)){
     
 }
 fclose($fData);
+
+$latestData = array_slice($data, -10);
+$dates10 = [];
+$prices10 = [];
+
+foreach ($latestData as $row) {
+    $dates10[] = DateTime::createFromFormat('Y/m/d H:i', $row[0])->format('Y-m-d\TH:i:s');
+    
+    $prices10[] = (float)$row[4];
+}
+// echo $dates10;
+// echo $prices10;
+// echo "<pre>";
+// print_r($dates10);
+// print_r($prices10);
+// echo "</pre>";
 
 $aPrice = number_format($tPrice / $rowCount);
 $aAmount = number_format($tAmount / $rowCount, 2);
@@ -103,15 +130,19 @@ echo htmlspecialchars("平均単価：".$aPpA."円", ENT_QUOTES);
 echo "<br>";
 echo htmlspecialchars("１円当たりの走行距離：".$aDpP."km/円", ENT_QUOTES);
 echo "<br>";
-echo htmlspecialchars("平均燃費：".$aDpA."km/円", ENT_QUOTES); ?>
+echo htmlspecialchars("平均燃費：".$aDpA."km/L", ENT_QUOTES); ?>
 </div>
+<div class="mx-2 text-red-500"><?php echo htmlspecialchars("最高燃費：".$maxDpA."km/円", ENT_QUOTES); ?></div>
+<div class="mx-2 text-blue-500"><?php echo htmlspecialchars("最低燃費：".$minDpA."km/円", ENT_QUOTES); ?></div>
 
 <div class="mx-2 w-4/5">
     <canvas id="mychart" width="600" height="200"></canvas>
+    <canvas id="mychart2" width="600" height="200"></canvas>
 
 </div>
 
 <script>
+// グラフ１個目
 let dates = <?php echo json_encode($dates); ?>;
 let fuelEs = <?php echo json_encode($fuelEs); ?>;
 console.log(dates);
@@ -163,6 +194,57 @@ let myChart = new Chart(ctx, {
     }
 });
 
+
+// グラフ２個目
+let dates10 = <?php echo json_encode($dates10); ?>;
+let prices10 = <?php echo json_encode($prices10); ?>;
+console.log(prices10);
+let ctx2 = document.getElementById('mychart2');
+let myChart2 = new Chart(ctx2, {
+    type: 'line',
+    data: {
+        labels: dates10,
+        datasets: [{
+            label: '直近10件の単価 (円)',
+            data: prices10,
+            borderColor: 'blue',
+            fill: false
+        }],
+    },
+    options: {
+        backgroundColor: 'red', 
+        scales: {
+            x: {
+                type: 'time',
+                
+                time: {
+                    unit: 'month',
+                    tooltipFormat: 'YYYY/MM/DD'
+            
+                },
+                title: {
+                    display: true,
+                    text: '日付'
+                // },
+                // ticks: {
+                //     autoSkip: false,
+                //     maxRotation: 0,
+                //     major: {
+                //         enabled: true
+                //     },
+                },
+            },
+            y: {
+                min: 140,
+                max: 190,
+                title: {
+                    display: true,
+                    text: '単価 (円)'
+                }
+            }
+        }
+    }
+});
 
 
 
