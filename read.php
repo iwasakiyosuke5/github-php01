@@ -162,8 +162,8 @@ echo htmlspecialchars("１円当たりの走行距離：".$aDpP."km/円", ENT_QU
 echo "<br>";
 echo htmlspecialchars("平均燃費：".$aDpA."km/L", ENT_QUOTES); ?>
 </div>
-<div class="mx-2 text-red-500"><?php echo htmlspecialchars("最高燃費：".$maxDpA."km/円", ENT_QUOTES); ?></div>
-<div class="mx-2 text-blue-500"><?php echo htmlspecialchars("最低燃費：".$minDpA."km/円", ENT_QUOTES); ?></div>
+<div class="mx-2 text-red-500"><?php echo htmlspecialchars("最高燃費：".$maxDpA."km/L", ENT_QUOTES); ?></div>
+<div class="mx-2 text-blue-500"><?php echo htmlspecialchars("最低燃費：".$minDpA."km/L", ENT_QUOTES); ?></div>
 <div class="mx-2 text-green-500"><?php echo htmlspecialchars("A EneJet新大宮SS：".$countA."回", ENT_QUOTES); ?></div>
 <div class="mx-2 text-green-500"><?php echo htmlspecialchars("B EneJetセルフ与野SS：".$countB."回", ENT_QUOTES); ?></div>
 <div class="mx-2 text-green-500"><?php echo htmlspecialchars("C EneJetセルフ栗橋SS：".$countC."回", ENT_QUOTES); ?></div>
