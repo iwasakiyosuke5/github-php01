@@ -16,6 +16,11 @@ $tDpA = 0;
 $maxDpA = 0;
 $minDpA = PHP_FLOAT_MAX; // 初期値を最大の浮動小数点数に設定
 $rowCount = 0;
+$countA = 0;
+$countB = 0;
+$countC = 0;
+$countD = 0;
+$countE = 0;
 $dates = [];
 $fuelEs = [];
 
@@ -37,7 +42,21 @@ while ($line = fgets($fData)){
     if ($currentDpA < $minDpA){
         $minDpA = $currentDpA;
     }
-    
+    if ($row[7] === 'A') {
+        $countA++;
+    }
+    if ($row[7] === 'B') {
+        $countB++;
+    }
+    if ($row[7] === 'C') {
+        $countC++;
+    }
+    if ($row[7] === 'D') {
+        $countD++;
+    }
+    if ($row[7] === 'E') {
+        $countE++;
+    }
     // 日付をISO 8601形式に変換 非常に重要
     $date = DateTime::createFromFormat('Y/m/d H:i', $row[0])->format('Y-m-d\TH:i:s');
     $dates[] = $date;
@@ -145,6 +164,11 @@ echo htmlspecialchars("平均燃費：".$aDpA."km/L", ENT_QUOTES); ?>
 </div>
 <div class="mx-2 text-red-500"><?php echo htmlspecialchars("最高燃費：".$maxDpA."km/円", ENT_QUOTES); ?></div>
 <div class="mx-2 text-blue-500"><?php echo htmlspecialchars("最低燃費：".$minDpA."km/円", ENT_QUOTES); ?></div>
+<div class="mx-2 text-green-500"><?php echo htmlspecialchars("A EneJet新大宮SS：".$countA."回", ENT_QUOTES); ?></div>
+<div class="mx-2 text-green-500"><?php echo htmlspecialchars("B EneJetセルフ与野SS：".$countB."回", ENT_QUOTES); ?></div>
+<div class="mx-2 text-green-500"><?php echo htmlspecialchars("C EneJetセルフ栗橋SS：".$countC."回", ENT_QUOTES); ?></div>
+<div class="mx-2 text-green-500"><?php echo htmlspecialchars("D Shell全般：".$countD."回", ENT_QUOTES); ?></div>
+<div class="mx-2 text-green-500"><?php echo htmlspecialchars("E その他：".$countE."回", ENT_QUOTES); ?></div>
 
 <div class="mx-2 w-4/5">
     <canvas id="mychart" width="600" height="200"></canvas>
