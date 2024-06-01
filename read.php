@@ -14,7 +14,7 @@ $tPpA = 0;
 $tDpP = 0;
 $tDpA = 0;
 $maxDpA = 0;
-$minDpA = PHP_FLOAT_MAX; // 初期値を最大の浮動小数点数に設定
+$minDpA = PHP_FLOAT_MAX; // 高めに設定してた（それでも動いたけど）。 初期値を最大の浮動小数点数に設定
 $rowCount = 0;
 $countA = 0;
 $countB = 0;
@@ -170,10 +170,11 @@ echo htmlspecialchars("平均燃費：".$aDpA."km/L", ENT_QUOTES); ?>
 <div class="mx-2 text-green-500"><?php echo htmlspecialchars("D Shell全般：".$countD."回", ENT_QUOTES); ?></div>
 <div class="mx-2 text-green-500"><?php echo htmlspecialchars("E その他：".$countE."回", ENT_QUOTES); ?></div>
 
-<div class="mx-2 w-4/5">
+<div class="mx-2 w-2/5">
     <canvas id="mychart" width="600" height="200"></canvas>
     <canvas id="mychart2" width="600" height="200"></canvas>
     <canvas id="mychart3" width="600" height="200"></canvas>
+    <canvas id="mychart4" width="150" height="150"></canvas>
 
 </div>
 
@@ -295,7 +296,7 @@ let myChart3 = new Chart(ctx3, {
             label: '最過去10件の購入量 (L)',
             data: pastAmount10,
             borderColor: 'violet',
-            fill: false
+            fill: false,
         }],
     },
     options: {
@@ -333,6 +334,38 @@ let myChart3 = new Chart(ctx3, {
     }
 });
 
+let countA = <?php echo json_encode($countA); ?>;
+let countB = <?php echo json_encode($countB); ?>;
+let countC = <?php echo json_encode($countC); ?>;
+let countD = <?php echo json_encode($countD); ?>;
+let countE = <?php echo json_encode($countE); ?>;
+
+const  ctx4 = document.getElementById("mychart4");
+  const myChart4 = new Chart(ctx4, {
+    type: 'pie',
+    data: {
+      labels: [
+    'EneJet新大宮SS',
+    'EneJetセルフ与野SS',
+    'EneJetセルフ栗橋SS',
+    'Shell全般',
+    'その他',
+  ],
+  datasets: [{
+    label: '店舗',
+    data: [countA, countB, countC, countD, countE],
+    backgroundColor: [
+      'rgb(54, 162, 235)',
+      'rgb(255, 99, 132)',
+      'rgb(255, 99, 230)',
+      'rgb(255, 150, 132)',
+      'rgb(255, 99, 200)',
+    ],
+    hoverBackgroundColor: 'red',
+    hoverOffset: 5,
+  }]
+  }
+  });
 
 
 </script>
